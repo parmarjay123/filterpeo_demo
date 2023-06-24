@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.mvvmwithretrofit.*
 import com.example.mvvmwithretrofit.adapters.PhotosAdapter
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         adapter = PhotosAdapter(listener)
         binding.recyclerview.adapter = adapter
+
+        viewModel.showLoader.observe(this, Observer {
+            binding.progress.isVisible=it
+        })
 
         viewModel.photosList.observe(this, Observer {
             adapter.setPhotos(it)
